@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title color="primary">
+      <b>Strike</b>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list>
+    <ion-list-header>Parameters</ion-list-header>
+    <ion-item [disabled]="this.stressStrikeController.inProgress">
+      <ion-label position="floating" color="primary">Site URL</ion-label>
+      <ion-input [(ngModel)]="endpointURL" placeholder = "https://site.example.com"></ion-input>
+    </ion-item>
+    <ion-item [disabled]="this.stressStrikeController.inProgress">
+      <ion-label position="floating" color="primary">Number of requests</ion-label>
+      <ion-input type="number" [(ngModel)]="numberOfRequests" placeholder = 10 max="10000"></ion-input>
+    </ion-item>
+    <ion-item [disabled]="this.stressStrikeController.inProgress">
+      <ion-label position="floating" color="primary">Request timeout (milliseconds)</ion-label>
+      <ion-input type="number" [(ngModel)]="requestTimeoutMillis" placeholder = 60000 min="1"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Stress strike results</ion-list-header>
+    <ion-item [disabled]="!this.stressStrikeController.inProgress">
+      <ion-label color="primary">Sent</ion-label>
+      <ion-input type="number" [value]="this.stressStrikeController.strikes.sent" color="primary" readonly></ion-input>
+    </ion-item>
+    <ion-item [disabled]="!this.stressStrikeController.inProgress">
+      <ion-label color="warning">Waiting Response</ion-label>
+      <ion-input type="number" [value]="this.stressStrikeController.strikes.awaitResponse" color="warning" readonly></ion-input>
+    </ion-item>
+    <ion-item [disabled]="!this.stressStrikeController.inProgress">
+      <ion-label color="success">Success</ion-label>
+      <ion-input type="number" [value]="this.stressStrikeController.strikes.success" color="success" readonly></ion-input>
+    </ion-item>
+    <ion-item [disabled]="!this.stressStrikeController.inProgress">
+      <ion-label color="danger">Failed</ion-label>
+      <ion-input type="number" [value]="this.stressStrikeController.strikes.failed" color="danger" readonly></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer collapse="fade">
+  <section>
+    <ion-progress-bar [hidden]="!this.stressStrikeController.inProgress" type="indeterminate"></ion-progress-bar>
+    <ion-button expand="full" size="large" color="secondary" (click)="onClickInitRequests()" [disabled]="this.stressStrikeController.inProgress">Start</ion-button>
+    <!-- TODO Enable button-->
+    <!-- <ion-button expand="full" size="large" color="secondary" (click)="onClickStopRequests()" [disabled]="!this.stressStrikeController.inProgress">Stop</ion-button> -->
+  </section>
+</ion-footer>
